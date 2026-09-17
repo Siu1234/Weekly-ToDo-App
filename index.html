@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#FBF7F2" />
+  <title>Weekly To-Do</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%236F9FE0'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='white'%3E%E2%9C%93%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <h1 class="app__title">Weekly To-Do</h1>
+
+      <nav class="week-nav" aria-label="Week navigation">
+        <button class="week-nav__btn" id="prev-week" aria-label="Previous week">&#8592;</button>
+        <div class="week-nav__label">
+          <span id="week-range" class="week-nav__range"></span>
+          <span id="week-hint" class="week-nav__hint"></span>
+        </div>
+        <button class="week-nav__btn" id="next-week" aria-label="Next week">&#8594;</button>
+      </nav>
+
+      <button class="clear-all" id="clear-all">Clear all this week</button>
+    </header>
+
+    <section class="days" id="days" aria-label="Days of the week"></section>
+
+    <footer class="app__footer">
+      <p>Your tasks are saved on this device only.</p>
+    </footer>
+  </main>
+
+  <div class="modal" id="clear-modal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__card" role="alertdialog" aria-modal="true" aria-labelledby="clear-modal-title">
+      <h2 id="clear-modal-title">Clear whole week?</h2>
+      <p>All tasks for the week <span id="clear-modal-range"></span> will be deleted. This can't be undone.</p>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" data-close>Keep tasks</button>
+        <button class="btn btn--danger" id="clear-confirm">Clear week</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
