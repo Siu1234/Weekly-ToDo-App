@@ -1,0 +1,12 @@
+{
+  "name": "Weekly To-Do",
+  "short_name": "To-Do",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fbf7f2",
+  "theme_color": "#a8c5ee",
+  "icons": [
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
