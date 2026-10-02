@@ -2,6 +2,7 @@
   "use strict";
 
   var STORAGE_KEY = "weekly-todo-v1";
+  var MEMO_KEY = "weekly-todo-memo";
   var DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
   var state = {
@@ -16,6 +17,21 @@
   var modal = document.getElementById("clear-modal");
   var modalRangeEl = document.getElementById("clear-modal-range");
   var confirmBtn = document.getElementById("clear-confirm");
+
+  var memo = document.getElementById("memo");
+  var memoOpenBtn = document.getElementById("memo-open");
+  var memoText = document.getElementById("memo-text");
+  var memoCount = document.getElementById("memo-count");
+  var memoClearBtn = document.getElementById("memo-clear");
+
+  memoOpenBtn.addEventListener("click", openMemo);
+  memoClearBtn.addEventListener("click", clearMemo);
+  memo.addEventListener("click", function (e) {
+    if (e.target.dataset.memoClose !== undefined) closeMemo();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !memo.hidden) closeMemo();
+  });
 
   document.getElementById("prev-week").addEventListener("click", function () {
     shiftWeek(-7);
@@ -33,6 +49,7 @@
   });
 
   render();
+  initMemo();
 
   function shiftWeek(days) {
     var next = new Date(state.weekStart);
@@ -321,5 +338,63 @@
 
   function newId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  // ----- Memo -----
+
+  function loadMemo() {
+    try {
+      return localStorage.getItem(MEMO_KEY) || "";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function saveMemo() {
+    try {
+      localStorage.setItem(MEMO_KEY, memoText.value);
+    } catch (e) {
+      alert("Could not save memo — storage may be full or blocked.");
+    }
+  }
+
+  function memoLineCount() {
+    var t = memoText.value.replace(/\s+$/g, "");
+    if (!t) return 0;
+    return t.split(/\r?\n/).filter(function (l) { return l.trim().length > 0; }).length;
+  }
+
+  function updateMemoCount() {
+    var n = memoLineCount();
+    memoCount.textContent = n === 0 ? "" : n + " item" + (n === 1 ? "" : "s") + " in memo";
+  }
+
+  function initMemo() {
+    memoText.value = loadMemo();
+    updateMemoCount();
+    memoText.addEventListener("input", function () {
+      saveMemo();
+      updateMemoCount();
+    });
+  }
+
+  function openMemo() {
+    memo.hidden = false;
+    memoText.focus();
+    memoText.select();
+  }
+
+  function closeMemo() {
+    memo.hidden = true;
+    memoOpenBtn.focus();
+  }
+
+  function clearMemo() {
+    if (!memoText.value.trim()) return;
+    if (!confirm("Clear the memo? This can't be undone.")) return;
+    memoText.value = "";
+    saveMemo();
+    updateMemoCount();
+    memoText.focus();
   }
 })();

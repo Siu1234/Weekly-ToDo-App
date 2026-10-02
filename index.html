@@ -14,7 +14,15 @@
 <body>
   <main class="app">
     <header class="app__header">
-      <h1 class="app__title">Weekly To-Do</h1>
+      <div class="app__header-top">
+        <h1 class="app__title">Weekly To-Do</h1>
+        <button class="memo-btn" id="memo-open" type="button" aria-label="Open memo" title="Pending memo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+        </button>
+      </div>
 
       <nav class="week-nav" aria-label="Week navigation">
         <button class="week-nav__btn" id="prev-week" aria-label="Previous week">&#8592;</button>
@@ -45,6 +53,21 @@
         <button class="btn btn--danger" id="clear-confirm">Clear week</button>
       </div>
     </div>
+  </div>
+
+  <div class="memo" id="memo" hidden>
+    <div class="memo__backdrop" data-memo-close></div>
+    <aside class="memo__panel" role="dialog" aria-modal="true" aria-labelledby="memo-title">
+      <div class="memo__head">
+        <h2 id="memo-title">Pending memo</h2>
+        <button class="memo__close" data-memo-close aria-label="Close memo">&times;</button>
+      </div>
+      <textarea id="memo-text" class="memo__text" placeholder="Jot down anything you still need to do&#10;— it stays here across weeks."></textarea>
+      <div class="memo__foot">
+        <span id="memo-count" class="memo__count"></span>
+        <button class="memo__clear" id="memo-clear">Clear</button>
+      </div>
+    </aside>
   </div>
 
   <script src="app.js"></script>
